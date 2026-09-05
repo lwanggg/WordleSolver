@@ -1,6 +1,6 @@
 /*
 Leo Wang
-06 / 12 / 26
+06 / 11 / 26
 
 Keeps track of which Wordle answers are still possible and uses
 average information gain / entropy to calculate the best
