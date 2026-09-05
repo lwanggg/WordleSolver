@@ -2,7 +2,7 @@
 
 /*
 Leo Wang
-06 / 13 / 26
+06 / 11 / 26
 
 Checks whether a possible answer matches the g/y/b result entered
 
