@@ -55,19 +55,21 @@ H = Σ p × -log2(p)
 
 a higher entropy means the possible answers are being split into smaller and more even groups, which usually means the guess will eliminate more words.
 
-for example, if there are 100 possible answers left, a guess that splits them into:
+for example, if there are 100 possible answers left, one guess might split them into groups like:
 
 ```text
 80, 10, 5, 5
 ```
 
-is usually worse than a guess that splits them into:
+this means one result pattern would match 80 of the possible answers, another would match 10, and the other two would each match 5.
+
+another guess might split the same 100 answers into:
 
 ```text
 25, 25, 25, 25
 ```
 
-because the second guess gives more useful information no matter which result comes back.
+the second split gives more information because every possible result narrows the answer list down to 25 words. in the first split, one result could still leave 80 possible answers. entropy rewards guesses that divide the possible answers into smaller and more evenly sized groups, which makes it easier to narrow down the answer after each guess.
 
 ## selenium automation
 
