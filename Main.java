@@ -3,7 +3,8 @@ Leo Wang
 06 / 11 / 26
 
 Interacts with user and controls game loop
-*/
+
+/
 
 import java.util.Scanner;
 
@@ -82,5 +83,102 @@ public class Main {
         }
 
         scanner.close();
+    }
+}
+*/
+
+/*
+Leo Wang
+06 / 16 / 26
+
+Automatically solves Wordle+ Infinite
+and continuously starts new games.
+*/
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        WordlePlusBrowser browser = new WordlePlusBrowser();
+
+        browser.open();
+        int gameNumber = 1;
+
+
+        // Keep playing new Wordles forever.
+        while (true) {
+
+            System.out.println();
+            System.out.println("======================");
+            System.out.println("GAME " + gameNumber);
+            System.out.println("======================");
+
+
+            Solver solver = new Solver();
+
+
+            // Precomputed highest-entropy first guess.
+            String word = "raise";
+            boolean solved = false;
+
+
+            for (int row = 0; row < 6; row++) {
+
+                System.out.println();
+                System.out.println("Guess " + (row + 1) + ": " + word);
+
+                browser.enterGuess(word);
+
+                // Read Wordle+'s G/Y/B result.
+                String result = browser.readResult(row);
+
+
+                System.out.println("Result: " + result);
+
+
+                // Check if the Wordle is solved.
+                if (result.equals("GGGGG")) {
+
+                    System.out.println();
+                    System.out.println("Wordle solved!");
+
+                    solved = true;
+
+                    break;
+                }
+
+
+                // Remove answers that are no longer possible.
+                solver.update(word, result);
+
+
+                System.out.println("Possible answers remaining: " + solver.getNumberOfAnswers());
+
+                if (solver.getNumberOfAnswers() == 0) {
+
+                    System.out.println("ERROR: No possible answers remain.");
+
+                    break;
+                }
+
+                // Calculate the highest-entropy next guess.
+                word = solver.getBestGuess();
+            }
+
+
+            if (!solved) {
+
+                System.out.println();
+                System.out.println("Failed to solve this Wordle.");
+            }
+
+            gameNumber++;
+
+
+            System.out.println();
+            System.out.println("Starting next Wordle...");
+
+            browser.newGame();
+        }
     }
 }
